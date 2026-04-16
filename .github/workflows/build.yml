@@ -1,0 +1,36 @@
+on:
+  workflow_call:
+name: "Build and upload release"
+concurrency:
+  group: ${{ github.workflow }}
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6.0.2
+        with:
+          repository: ${{ github.action_repository }}
+          path: .
+        name: "Checkout ${{ github.action_repository }} repository"
+      - uses: actions/checkout@v6.0.2
+        with:
+          path: target
+        name: "Checkout target repository"
+      - run: bash build.sh
+        name: "Build release file"
+      - uses: softprops/action-gh-release@v2
+        if: github.ref_type != 'tag'
+        with:
+          name: ${{ github.sha }}
+          files: target/release.zip
+          tag_name: v${{ github.run_number }}
+        name: "Upload release file (continuous release)"
+      - uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          name: ${{ github.sha }}
+          files: target/release.zip
+          tag_name: ${{ github.ref_name }}
+        name: "Upload release file"

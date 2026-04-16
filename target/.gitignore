@@ -1,0 +1,8 @@
+bin/
+obj/
+lib/
+
+.idea/
+Folder.DotSettings.user
+
+build/
