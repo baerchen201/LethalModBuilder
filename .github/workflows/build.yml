@@ -1,5 +1,11 @@
 on:
   workflow_call:
+    inputs:
+      prerelease:
+        description: Marks the release as a pre-release
+        type: boolean
+        default: false
+        required: false
 name: "Build and upload release"
 concurrency:
   group: ${{ github.workflow }}
@@ -26,6 +32,7 @@ jobs:
           name: ${{ github.sha }}
           files: target/release.zip
           tag_name: v${{ github.run_number }}
+          prerelease: ${{ inputs.prerelease }}
         name: "Upload release file (continuous release)"
       - uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
@@ -33,4 +40,5 @@ jobs:
           name: ${{ github.sha }}
           files: target/release.zip
           tag_name: ${{ github.ref_name }}
+          prerelease: ${{ inputs.prerelease }}
         name: "Upload release file"
