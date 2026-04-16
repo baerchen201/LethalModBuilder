@@ -11,9 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6.0.2
         with:
-          repository: ${{ github.action_repository }}
+          repository: baerchen201/LethalModBuilder
           path: .
-        name: "Checkout ${{ github.action_repository }} repository"
+        name: "Checkout LethalModBuilder repository"
       - uses: actions/checkout@v6.0.2
         with:
           path: target
