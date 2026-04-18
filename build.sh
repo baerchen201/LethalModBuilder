@@ -25,4 +25,15 @@ if [ -f postbuild.sh ]; then
   echo -e "\e[1;94m==== POST-BUILD ====\e[0m" # I hate this one character offset so much
   bash postbuild.sh
 fi
-echo -e "\e[1;94m====================\nRelease file created at \e[32m\"release.zip\"\e[0m"
+echo -e "\e[1;94m====  FINALIZE  ====\e[0m"
+echo "Creating release folder..."
+mkdir release
+mv release.zip release
+echo "Checking for nupkg files..."
+shopt -s nullglob
+if [ -n "$(echo build/*.nupkg)" ]; then
+  cp -v build/*.nupkg release
+else
+  echo "No nupkg files"
+fi
+echo -e "\e[1;94m====================\nRelease files created at \e[32m\"target/release\"\e[0m"

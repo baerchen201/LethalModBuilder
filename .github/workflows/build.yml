@@ -30,7 +30,7 @@ jobs:
         if: github.ref_type != 'tag'
         with:
           name: v${{ github.run_number }}
-          files: target/release.zip
+          files: target/release/*
           tag_name: v${{ github.run_number }}
           prerelease: ${{ inputs.prerelease }}
         name: "Upload release file (continuous release)"
@@ -38,7 +38,7 @@ jobs:
         if: github.ref_type == 'tag'
         with:
           name: ${{ github.ref_name }}
-          files: target/release.zip
+          files: target/release/*
           tag_name: ${{ github.ref_name }}
           prerelease: ${{ inputs.prerelease }}
         name: "Upload release file"
