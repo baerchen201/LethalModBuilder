@@ -25,7 +25,7 @@ jobs:
           path: target
         name: "Checkout target repository"
       - run: bash build.sh
-        name: "Build release file"
+        name: "Build and prepare release files"
       - uses: softprops/action-gh-release@v3
         if: github.ref_type != 'tag'
         with:
@@ -33,7 +33,7 @@ jobs:
           files: target/release/*
           tag_name: v${{ github.run_number }}
           prerelease: ${{ inputs.prerelease }}
-        name: "Upload release file (continuous release)"
+        name: "Upload release files (continuous release)"
       - uses: softprops/action-gh-release@v3
         if: github.ref_type == 'tag'
         with:
@@ -41,4 +41,4 @@ jobs:
           files: target/release/*
           tag_name: ${{ github.ref_name }}
           prerelease: ${{ inputs.prerelease }}
-        name: "Upload release file"
+        name: "Upload release files"
