@@ -20,7 +20,12 @@ echo -e "\e[1;94m====   BUILD   ====\e[0m"
 dotnet build -c Release -o build
 echo -e "\e[1;94m====    ZIP    ====\e[0m"
 zip "release.zip" -jMM "manifest.json" build/**.dll
+set +e
 zip "release.zip" -j "icon.png" "README.md"
+_e="$?"
+if [ "$_e" != 12 ]; then exit "$_e"; fi
+unset _e
+set -e
 if [ -f postbuild.sh ]; then
   echo -e "\e[1;94m==== POST-BUILD ====\e[0m" # I hate this one character offset so much
   bash postbuild.sh
