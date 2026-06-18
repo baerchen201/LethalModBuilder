@@ -23,7 +23,7 @@ zip "release.zip" -jMM "manifest.json" build/**.dll
 set +e
 zip "release.zip" -j "icon.png" "README.md"
 _e="$?"
-if [ "$_e" != 12 ]; then exit "$_e"; fi
+if ["$_e" != 0 ] && [ "$_e" != 12 ]; then exit "$_e"; fi
 unset _e
 set -e
 if [ -f postbuild.sh ]; then
