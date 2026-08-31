@@ -12,6 +12,8 @@ fi
 
 # Default build script (fallback)
 
+echo "Creating release directory..."
+mkdir release # this directory shouldn't exist in the repo and shouldn't have any contents
 if [ -f prebuild.sh ]; then
   echo -e "\e[1;94m==== PRE-BUILD ====\e[0m"
   bash prebuild.sh
@@ -27,13 +29,11 @@ if [ "$_e" != 0 ] && [ "$_e" != 12 ]; then exit "$_e"; fi
 unset _e
 set -e
 if [ -f postbuild.sh ]; then
-  echo -e "\e[1;94m==== POST-BUILD ====\e[0m" # I hate this one character offset so much
+  echo -e "\e[1;94m==== POST-BUILD ====\e[0m"
   bash postbuild.sh
 fi
 echo -e "\e[1;94m====  FINALIZE  ====\e[0m"
-echo "Creating release folder..."
-mkdir release
-mv release.zip release
+mv -v release.zip release
 echo "Checking for nupkg files..."
 shopt -s nullglob
 if [ -n "$(echo build/*.nupkg)" ]; then
