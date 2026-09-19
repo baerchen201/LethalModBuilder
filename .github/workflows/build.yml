@@ -24,7 +24,11 @@ jobs:
         with:
           path: target
         name: "Checkout target repository"
-      - run: bash build.sh
+      - run: bash build.sh ${{ github.run_number }}
+        if: github.ref_type != 'tag'
+        name: "Build and prepare release files (continuous release)"
+      - run: bash build.sh ${{ github.ref_name }}
+        if: github.ref_type == 'tag'
         name: "Build and prepare release files"
       - uses: softprops/action-gh-release@v3
         if: github.ref_type != 'tag'

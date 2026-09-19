@@ -16,7 +16,7 @@ echo "Creating release directory..."
 mkdir release # this directory shouldn't exist in the repo and shouldn't have any contents
 if [ -f prebuild.sh ]; then
   echo -e "\e[1;94m==== PRE-BUILD ====\e[0m"
-  bash prebuild.sh
+  bash prebuild.sh $1
 fi
 echo -e "\e[1;94m====   BUILD   ====\e[0m"
 dotnet build -c Release -o build
@@ -30,7 +30,7 @@ unset _e
 set -e
 if [ -f postbuild.sh ]; then
   echo -e "\e[1;94m==== POST-BUILD ====\e[0m"
-  bash postbuild.sh
+  bash postbuild.sh $1
 fi
 echo -e "\e[1;94m====  FINALIZE  ====\e[0m"
 mv -v release.zip release
