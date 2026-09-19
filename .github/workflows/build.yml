@@ -24,7 +24,7 @@ jobs:
         with:
           path: target
         name: "Checkout target repository"
-      - run: bash build.sh ${{ github.run_number }}
+      - run: bash build.sh v${{ github.run_number }}
         if: github.ref_type != 'tag'
         name: "Build and prepare release files (continuous release)"
       - run: bash build.sh ${{ github.ref_name }}
